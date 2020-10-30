@@ -1,2 +1,2 @@
 import './src/styles/reset.less';
-require('./src/js/tree');
+require('./src/js/animate');
