@@ -4,7 +4,7 @@ module.exports = {
     mode:'development',
     entry:'./index.js',
     output:{
-        filename:'bundle.js',
+        filename:'js/bundle.js',
         path: path.resolve(__dirname,'dist')
     },
     module:{
@@ -85,6 +85,8 @@ module.exports = {
                         loader:'url-loader',//超过一定大小，转base64
                         options: {
                             limit: 8192,
+                            esModule:false, //关闭es6模块化 
+                            outpath:'images'
                         }
                     }
                 ]
@@ -96,7 +98,7 @@ module.exports = {
                         loader:'file-loader',
                         options:{
                             name: '[path][name].[ext]',//为图片重命名
-                            publicPath: 'assets',   
+                            outpath:'images'  
                         }
                     }
                 ]
@@ -108,6 +110,7 @@ module.exports = {
                         loader:'file-loader',
                         options:{
                             name: '[path][name].[ext]',//为其他资源重命名  
+                            outpath:'medias'
                         }
                     }
                 ]
