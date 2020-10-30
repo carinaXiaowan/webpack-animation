@@ -1,5 +1,5 @@
 const path = require('path');
-
+const HtmlWebpackPlugin = require('html-webpack-plugin');//简化了HTML文件的创建,生成一个 HTML5 文件， 其中包括使用 script 标签的 body 中的所有 webpack 包
 module.exports = {
     mode:'development',
     entry:'./index.js',
@@ -9,6 +9,13 @@ module.exports = {
     },
     module:{
         rules:[
+            {
+                test:/\.jsx?$/,
+                exclude: /node_modules/,
+                use: [
+                    'babel-loader'
+                ]
+            },
             {
                 test:/\.css$/,
                 use:[
@@ -64,10 +71,58 @@ module.exports = {
                     }
                        
                 ]
+            },
+            {
+                test: /\.html$/,//抽取公共部分的html代码,解析img插入的图片 
+                use:[
+                    'html-loader'
+                ],
+            },
+            {
+                test: /\.(png|jpe?g|gif)$/,//打包图片资源
+                use:[
+                    {
+                        loader:'url-loader',//超过一定大小，转base64
+                        options: {
+                            limit: 8192,
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.(png|jpe?g|gif)$/,//打包图片资源
+                use:[
+                    {
+                        loader:'file-loader',
+                        options:{
+                            name: '[path][name].[ext]',//为图片重命名
+                            publicPath: 'assets',   
+                        }
+                    }
+                ]
+            },
+            {
+                exclude:/\.(css|js|html|less)$/,
+                use:[
+                    {
+                        loader:'file-loader',
+                        options:{
+                            name: '[path][name].[ext]',//为其他资源重命名  
+                        }
+                    }
+                ]
             }
+
         ]
     },
     plugins:[
-        
-    ]
+        new HtmlWebpackPlugin({
+            template:'./index.html'//复制项目中的文件，并自动引入打包输出的资源
+        }),
+    ],
+    devServer:{
+        contentBase: path.resolve(__dirname,'dist'),
+        port:'3000',
+        open: true
+    }
 }
