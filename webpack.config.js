@@ -120,7 +120,7 @@ module.exports = {
     },
     plugins:[
         new HtmlWebpackPlugin({
-            template:'./index.html'//复制项目中的文件，并自动引入打包输出的资源
+            template:'./index.html'//复制项目中的文件，并自动引入打包输出的资源，模板文件，即需要打包和拷贝到build目录下的html文件
         }),
     ],
     devServer:{
