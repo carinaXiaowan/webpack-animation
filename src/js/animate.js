@@ -1,2 +1,4 @@
-const Animate = {};
+const Animate = {
+    
+};
 module.exports = Animate;
